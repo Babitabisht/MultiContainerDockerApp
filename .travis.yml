@@ -1,0 +1,21 @@
+language: generic
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t babitabisht/client-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run babitabisht/client-test npm test -- --coverage
+
+after_success:
+  - docker build -t babitabisht/multi-client ./client
+  - docker build -t babitabisht/multi-nginx  ./nginx
+  - docker build -t babitabisht/multi-server ./server
+  - docker build -t babitabisht/multi-worker ./worker
+  - echo "$DOCKER _PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push  babitabisht/multi-client
+  - docker push  babitabisht/multi-nginx
+  - docker push  babitabisht/multi-server
+  - docker push  babitabisht/multi-worker
+
