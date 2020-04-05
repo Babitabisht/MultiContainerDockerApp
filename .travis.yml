@@ -13,7 +13,7 @@ after_success:
   - docker build -t babitabisht/multi-nginx  ./nginx
   - docker build -t babitabisht/multi-server ./server
   - docker build -t babitabisht/multi-worker ./worker
-  - echo "$DOCKER _PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push  babitabisht/multi-client
   - docker push  babitabisht/multi-nginx
   - docker push  babitabisht/multi-server
