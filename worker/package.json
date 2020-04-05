@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [
     "redis",
@@ -15,6 +17,7 @@
   "author": "Babita Bisht",
   "license": "ISC",
   "dependencies": {
+    "nodemon": "^2.0.2",
     "redis": "^3.0.2"
   }
 }

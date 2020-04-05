@@ -41,7 +41,7 @@ app.get("/",(req,res)=>{
 
 app.get("/values/all",async(req,res)=>{
     const  row = await pgClient.query('SELECT * from values');
-    res.send(values.rows);
+    res.send(row.rows);
 });
 
 app.get("/values/current",async(req,res)=>{
@@ -51,14 +51,14 @@ app.get("/values/current",async(req,res)=>{
 });
 
 app.post("/values",async(req,res)=>{
-
+console.log("---in post ----",req.body)
     const index= req.body.index;
     if(parseInt(index)>40){
         return res.status(422).send('Index too high');
     }
-    redisClient.hset("values",index,"Nothing yet!");
-    redisPublisher.publish("insert",index);
-    pgClient.query('INSERT INTO values(number) VALUES($1)',[index]);
+    redisClient.hset("values",parseInt(index),"Nothing yet!");
+    redisPublisher.publish("insert",parseInt(index));
+    pgClient.query('INSERT INTO values(number) VALUES($1)',[parseInt(index)]);
     res.send({working:true});
 
 });

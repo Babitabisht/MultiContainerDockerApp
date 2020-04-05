@@ -15,7 +15,18 @@ function fib(index){
 }
 
 sub.on('message',(channel,message)=>{
-    redisClient.hset("values",message,fib(parseInt(message)));
+    console.log("incoming value",message)
+    try {
+        if(message==0||1){
+        redisClient.hset("values",message,parseInt(message));
+
+        }
+        console.log("---in message---")
+        redisClient.hset("values",message,fib(parseInt(message)));
+    } catch (error) {
+        console.log(error)
+    }
+   
 })
 
 sub.subscribe("insert");
